@@ -20,15 +20,19 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
-    public User register(RegisterRequest request) {
-        User user = User.builder()
-                .name(request.getName())
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
-        userRepository.save(user);
-        return user;
+    public User register(RegisterRequest request) throws Exception {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new Exception("Username has been used");
+        } else {
+            User user = User.builder()
+                    .name(request.getName())
+                    .username(request.getUsername())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .role(request.getRole())
+                    .build();
+            userRepository.save(user);
+            return user;
+        }
     }
     public String login(LoginRequest request) {
         authenticationManager.authenticate(
