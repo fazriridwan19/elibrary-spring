@@ -37,7 +37,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserController {
     private final AuthService authService;
 
-    @Operation(summary = "Register user", description = "This is endpoint to register new admin", tags = "User Controller")
+    @Operation(summary = "Register admin", description = "This is endpoint to register new admin", tags = "User Controller")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Admin has been created", content = {
                     @Content(mediaType = "application/json", schema = @Schema(implementation = DataResponse.class))
